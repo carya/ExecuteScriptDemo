@@ -213,3 +213,19 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+*.class
+
+*.class
+
+target/classes/log.txt
+
+target/classes/log_analysis.sh
+
+target/classes/ExecuteScript.class
+
+target/m2e-jee/web-resources/META-INF/maven/ExecuteScriptDemo/ExecuteScriptDemo/pom.properties
+
+target/m2e-jee/web-resources/META-INF/maven/ExecuteScriptDemo/ExecuteScriptDemo/pom.properties
+
+target/classes/ExecuteScript.class
