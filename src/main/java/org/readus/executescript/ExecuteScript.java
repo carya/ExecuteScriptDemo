@@ -18,6 +18,7 @@ public class ExecuteScript {
 
 	//以Runtime.exec的方式调用脚本
 	public void executeScript() {
+		//获取可执行脚本路径|scriptPath|及其参数文本路径|logPath|
 		String scriptPath = Thread.currentThread().getContextClassLoader()
 				.getResource("log_analysis.sh").getPath();
 		String logPath = Thread.currentThread().getContextClassLoader()
@@ -29,6 +30,7 @@ public class ExecuteScript {
 		BufferedReader bre = null;
 		try {
 			Process process = runtime.exec(cmdarray);
+			//读取标准输出流
 			br = new BufferedReader(new InputStreamReader(
 					process.getInputStream()));
 			StringBuffer linesBuffer = new StringBuffer();
@@ -37,7 +39,7 @@ public class ExecuteScript {
 				linesBuffer.append(line).append("\n");
 			}
 			System.out.println("get output: \n" + linesBuffer.toString());
-
+			//读取标准错误输出流
 			bre = new BufferedReader(new InputStreamReader(
 					process.getErrorStream()));
 			StringBuffer errorBuffer = new StringBuffer();
@@ -47,6 +49,7 @@ public class ExecuteScript {
 			}
 			System.out.println("get error output: \n" + errorBuffer.toString());
 
+			//等到脚本执行完毕，获取返回码|exitValue|
 			int exitValue = process.waitFor();
 			if (0 == exitValue) {
 				System.out.println("execute script success.");
@@ -173,12 +176,14 @@ public class ExecuteScript {
 		commandsList.add(scriptPath);
 		commandsList.add(logPath);
 		ProcessBuilder processBuilder = new ProcessBuilder(commandsList);
+		//merge standard output stream and standard error output stream
 		processBuilder.redirectErrorStream(true);
 		BufferedReader br = null;
 		try {
 			Process process = processBuilder.start();
 
 			try {
+				//读取标准输出流和标准错误输出流
 				br = new BufferedReader(new InputStreamReader(
 						process.getInputStream()));
 				StringBuffer linesBuffer = new StringBuffer();
