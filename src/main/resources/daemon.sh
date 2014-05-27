@@ -2,13 +2,17 @@
 
 case "$1" in
     "start")
-        echo "start success."
+    	sudo snmpd
+    	if [ $? -eq 0 ]; then
+    		echo "start snmpd success."
+        fi
         ;;
     "stop")
-        echo "stop success."
-        ;;
-    "restart")
-        echo "restart success."
+    	pid=$(sudo lsof -i:161 | grep snmpd | awk '{print $2}')
+    	sudo kill -9 $pid
+    	if [ $? -eq 0 ]; then
+    		echo "stop snmpd success."
+    	fi
         ;;
     *)
         echo "unsupport commond"

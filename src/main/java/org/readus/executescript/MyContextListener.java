@@ -14,8 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-public class ControllableExecution implements ServletContextListener {
-
+public class MyContextListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		ClassLoader classLoader = Thread.currentThread()
@@ -34,9 +33,9 @@ public class ControllableExecution implements ServletContextListener {
 			servletContext.setAttribute("daemon", process);
 			int exitValue = process.waitFor();
 			if (0 == exitValue) {
-				
+				System.out.println("start daemon success.");
 			} else {
-
+				System.out.println("start daemon failed, exitValue: " + exitValue);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -46,7 +45,6 @@ public class ControllableExecution implements ServletContextListener {
 			e.printStackTrace();
 		}
 	}
-
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		ClassLoader classLoader = Thread.currentThread()
@@ -62,9 +60,9 @@ public class ControllableExecution implements ServletContextListener {
 			Process process = processBuilder.start();
 			int exitValue = process.waitFor();
 			if (0 == exitValue) {
-				
+				System.out.println("stop daemon success.");
 			} else {
-
+				System.out.println("stop daemon failed, exitValue: " + exitValue);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -74,5 +72,4 @@ public class ControllableExecution implements ServletContextListener {
 			e.printStackTrace();
 		}
 	}
-
 }
